@@ -1,0 +1,9 @@
+{
+    "title": "Basic Dash Template",
+    "external_css": [
+        "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    ],
+    "pages": {
+        "/page1": "basic_page"
+    }
+}
