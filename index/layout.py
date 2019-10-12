@@ -1,6 +1,8 @@
 import dash_core_components as dcc
 import dash_html_components as html
 
+from app import config
+
 
 def layout(params):
     # This function must return a layout for the homepage
@@ -17,31 +19,20 @@ def layout(params):
                 [
                     html.Div(
                         [
-                            html.Div(html.H5('Test page 1'), className='card-header'),
+                            html.Div(page.get('name', ''), className='card-header'),
                             html.Div(
                                 [
-                                    html.P('Info on page 1'),
-                                    html.A('View', href='/page1', className='btn btn-lg btn-block btn-outline-dark mt-auto')
+                                    html.P(page.get('description', '')),
+                                    html.A('View', href=page.get('path', '/'), className='btn btn-block btn-outline-primary')
                                 ],
                                 className='card-body d-flex flex-column'
                             )
                         ],
-                        className='card ', style={'min-width': '220px'}
-                    ),
-                    html.Div(
-                        [
-                            html.Div(html.H5('Test page 2'), className='card-header'),
-                            html.Div(
-                                [
-                                    html.P('Page 2 doesn\'t exist yet...'),
-                                ],
-                                className='card-body d-flex flex-column'
-                            )
-                        ],
-                        className='card ', style={'min-width': '220px'}
+                        className='card mb-3 mx-auto'
                     )
+                    for page in config.get('pages', [])
                 ],
-                className='card-deck mb-3 text-center'
+                className='card-deck homepage mb-3'
             )
         ],
         className='container'

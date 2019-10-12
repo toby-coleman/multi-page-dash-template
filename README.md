@@ -25,8 +25,11 @@ To use this template as part of a new application you need to:
 
 1.  Edit [header.py](header.py) and the [index](index) package to customise the homepage;
 2.  Rename/edit the [basic_page](basic_page) package to add layout and callbacks for your own page;
-3.  Create new packages for each new page that you need;
-4.  Edit the `pages` dictionary in [config.json](config.json) to associate each URL path, e.g. `page1`, with the package that contains its layout/callbacks, e.g. [basic_page](basic_page); and
+3.  Create new packages for each additional page that you need;
+4.  Edit the `pages` list in [config.json](config.json) to provide configuration for each page, i.e.
+    *   The URL path, e.g. `page1`;
+    *   The package that contains its layout/callbacks, e.g. [basic_page](basic_page);
+    *   The name and description to be displayed on the homepage menu;
 5.  Customise [style.css](assets/style.css) with any changes to the page style.
 
 ## Useful references

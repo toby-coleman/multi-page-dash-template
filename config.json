@@ -3,7 +3,7 @@
     "external_css": [
         "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     ],
-    "pages": {
-        "/page1": "basic_page"
-    }
+    "pages": [
+        {"path": "/page1", "name": "Basic Demo", "package": "basic_page", "description": "A simple example page"}
+    ]
 }

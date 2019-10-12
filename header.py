@@ -8,7 +8,7 @@ def layout():
         [
             html.A(
                 'Dash Template Application',
-                href='#',
+                href='/',
                 className='navbar-brand'
             ),
             # Add other menu items here...
