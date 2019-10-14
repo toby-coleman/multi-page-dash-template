@@ -1,5 +1,6 @@
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_bootstrap_components as dbc
 
 from app import config
 
@@ -7,7 +8,7 @@ from app import config
 def layout(params):
     # This function must return a layout for the homepage
 
-    return html.Div(
+    return dbc.Container(
         [
             html.Div(
                 [
@@ -15,25 +16,24 @@ def layout(params):
                 ],
                 className='px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center'
             ),
-            html.Div(
+            dbc.CardDeck(
                 [
-                    html.Div(
+                    dbc.Card(
                         [
-                            html.Div(page.get('name', ''), className='card-header'),
-                            html.Div(
+                            dbc.CardHeader(page.get('name', '')),
+                            dbc.CardBody(
                                 [
                                     html.P(page.get('description', '')),
                                     html.A('View', href=page.get('path', '/'), className='btn btn-block btn-outline-primary')
                                 ],
-                                className='card-body d-flex flex-column'
+                                className='d-flex flex-column'
                             )
                         ],
-                        className='card mb-3 mx-auto'
+                        className='mb-3 mx-auto'
                     )
                     for page in config.get('pages', [])
                 ],
-                className='card-deck homepage mb-3'
+                className='homepage mb-3'
             )
         ],
-        className='container'
     )

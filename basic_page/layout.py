@@ -1,5 +1,6 @@
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_bootstrap_components as dbc
 
 import utils
 
@@ -9,34 +10,32 @@ def layout(params):
     # Use __package__ as a prefix to each id to make sure they are unique between pages
 
     # Do something basic as a demo
-    return html.Div(
+    return dbc.Row(
         [
-            html.Div(
+            dbc.Col(
                 [
-                    html.Div(
+                    dbc.Card(
                         [
-                            html.Div('Chart demo', className='card-header'),
-                            html.Div(
+                            dbc.CardHeader('Chart demo'),
+                            dbc.CardBody(
                                 [
-                                    html.Button(
+                                    dbc.Button(
                                         'Click here to update chart...',
                                         id=__package__ + '-button',
-                                        className='btn btn-primary'
+                                        color='primary'
                                     ),
                                 ],
-                                className='card-body mx-auto'
                             ),
                         ],
-                        className='card'
                     ),
                     html.Br(),
-                    html.Div(
+                    dbc.Card(
                         [
-                            html.Div('URL parameters table', className='card-header'),
-                            html.Div(
+                            dbc.CardHeader('URL parameters table'),
+                            dbc.CardBody(
                                 [
                                     html.A('Click here for an example', href='?param1=42&param2=test'),
-                                    html.Table(
+                                    dbc.Table(
                                         html.Tbody(
                                             [
                                                 html.Tr([html.Td(key), html.Td(value)])
@@ -44,23 +43,21 @@ def layout(params):
                                             ],
                                             id=__package__ + '-table'
                                         ),
-                                        className='table table-striped table-sm'
+                                        bordered=True, striped=True
                                     ),
                                 ],
-                                className='card-body'
                             ),
                         ],
-                        className='card'
                     ),
                 ],
-                className='col-6 pd-2'
+                width=6, className='pd-2'
             ),
-            html.Div(
+            dbc.Col(
                 [
-                    html.Div(
+                    dbc.Card(
                         [
-                            html.Div('Some points on a chart', className='card-header'),
-                            html.Div(
+                            dbc.CardHeader('Some points on a chart'),
+                            dbc.CardBody(
                                 [
                                     dcc.Graph(
                                         figure=utils.empty_figure(),
@@ -68,14 +65,12 @@ def layout(params):
                                         config={'displayModeBar': False},
                                     )
                                 ],
-                                className='card-body'
                             ),
                         ],
-                        className='card mx-auto'
                     ),                    
                 ],
-                className='col-6 pd-2'
+                width=6, className='pd-2'
             ),
         ],
-        className='row mx-5 mt-5'
+        className='mx-5 mt-5'
     )
