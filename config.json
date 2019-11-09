@@ -5,5 +5,6 @@
     ],
     "pages": [
         {"path": "/page1", "name": "Basic Demo", "package": "basic_page", "description": "A simple example page"}
-    ]
+    ],
+    "authenticate": true
 }

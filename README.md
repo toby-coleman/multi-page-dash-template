@@ -30,7 +30,10 @@ To use this template as part of a new application you need to:
     *   The URL path, e.g. `page1`;
     *   The package that contains its layout/callbacks, e.g. [basic_page](basic_page);
     *   The name and description to be displayed on the homepage menu;
-5.  Customise [style.css](assets/style.css) with any changes to the page style.
+5.  If authentication is required, enable it in [config.json](config.json) and then complete the following [authentication methods](authentication/logic.py):
+    *   `route_login()` should check login credentials for a user logging in;
+    *   `check_cookie` should check the session cookie for a logged-in user and return `True` only if it is valid;
+6.  Customise [style.css](assets/style.css) with any changes to the page style.
 
 ## Useful references
 
