@@ -11,5 +11,5 @@
         }
     ],
     "cards_per_row": 2,
-    "authenticate": true
+    "authenticate": false
 }

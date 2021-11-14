@@ -1,9 +1,8 @@
-import json
 from importlib import import_module
 from urllib import parse
 
 import dash
-import flask
+import flask_jwt_extended
 from dash import dcc, html
 
 import authentication
@@ -44,20 +43,25 @@ def display_page(url_path, search):
     else:
         params = {}
     # Load session cookie to see if user is logged in
-    session_cookie = flask.request.cookies.get("auth-session")
     if config.get("authenticate"):
-        if not session_cookie or not authentication.check_cookie(session_cookie):
+        try:
+            # Verify JWT token
+            flask_jwt_extended.verify_jwt_in_request(optional=True)
+        except flask_jwt_extended.exceptions.JWTExtendedException:
+            # Failure, so go to login screen
+            return [index.header(), index.login()]
+        if not authentication.check_cookie():
             # User is not logged in, so go to login screen
             return [index.header(), index.login()]
     # Load the page from the appropriate package
     if url_path and url_path.rstrip("/") in pages.keys():
         return [
-            index.header(auth=session_cookie),
+            index.header(auth=authentication.check_cookie()),
             pages[url_path.rstrip("/")].layout(params),
         ]
     else:
         # Default to homepage
-        return [index.header(auth=session_cookie), index.layout(params)]
+        return [index.header(auth=authentication.check_cookie()), index.layout(params)]
 
 
 if __name__ == "__main__":

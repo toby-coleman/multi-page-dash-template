@@ -30,12 +30,14 @@ To use this template as part of a new application you need to:
     *   The URL path, e.g. `page1`;
     *   The package that contains its layout/callbacks, e.g. [basic_page](basic_page);
     *   The name and description to be displayed on the homepage menu;
-5.  If authentication is required, enable it in [config.json](config.json) and then complete the following [authentication methods](authentication/logic.py):
-    *   `route_login()` should check login credentials for a user logging in;
-    *   `check_cookie` should check the session cookie for a logged-in user and return `True` only if it is valid;
+5.  If authentication is required, enable it in [config.json](config.json) and then either:
+    *   Set an environment variable called `VALID_USERS` with a JSON dictionary of username/password combinations to be accepted, e.g. `{"demo_user": "demo_pass"}` or;
+    *   Implement your own authentication logic in [authentication methods](authentication/logic.py): `check_cookie` should check the session cookie for a logged-in user and return `True` only if it is valid;
 6.  Customise [style.css](assets/style.css) with any changes to the page style.
 
 ## Useful references
 
 1.  [Plotly Dash Documentation](https://dash.plot.ly/).
-2.  [Bootstrap CSS Documentation](https://getbootstrap.com/docs/4.0/getting-started/introduction/).
+2.  [Bootstrap CSS Documentation](https://getbootstrap.com/docs/5.1/getting-started/introduction/).
+3.  [Dash Bootstrap Components](https://dash-bootstrap-components.opensource.faculty.ai/docs/quickstart/).
+4.  Information on authentication in [Flask](https://medium.com/analytics-vidhya/integrating-cognito-with-flask-e00010866054).
