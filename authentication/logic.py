@@ -27,6 +27,17 @@ app.server.config["JWT_TOKEN_LOCATION"] = ["cookies"]
 app.server.config["JWT_COOKIE_CSRF_PROTECT"] = False
 app.server.config["JWT_SECRET_KEY"] = SECRET_KEY
 
+
+@jwt.invalid_token_loader
+def invalid_token_callback(callback):
+    # Invalid token in auth header
+    response = flask.Response(
+        response=json.dumps({"message": "Invalid token"}), status=401, mimetype="application/json"
+    )
+    unset_access_cookies(response)
+    return response
+
+
 # Login route
 @app.server.route("/custom-auth/login", methods=["POST"])
 def route_login():
