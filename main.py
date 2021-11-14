@@ -56,12 +56,15 @@ def display_page(url_path, search):
     # Load the page from the appropriate package
     if url_path and url_path.rstrip("/") in pages.keys():
         return [
-            index.header(auth=authentication.check_cookie()),
+            index.header(auth=authentication.check_cookie() if config.get("authenticate") else None),
             pages[url_path.rstrip("/")].layout(params),
         ]
     else:
         # Default to homepage
-        return [index.header(auth=authentication.check_cookie()), index.layout(params)]
+        return [
+            index.header(auth=authentication.check_cookie() if config.get("authenticate") else None),
+            index.layout(params),
+        ]
 
 
 if __name__ == "__main__":

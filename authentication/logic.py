@@ -22,10 +22,22 @@ jwt = JWTManager(app.server)
 # Only send cookies over HTTPS: set to True for production
 app.server.config["JWT_COOKIE_SECURE"] = False
 app.server.config["JWT_TOKEN_LOCATION"] = ["cookies"]
-# Need a method to put CSRF token in header to enable this
-# See: https://flask-jwt-extended.readthedocs.io/en/stable/token_locations/
-app.server.config["JWT_COOKIE_CSRF_PROTECT"] = False
+app.server.config["JWT_COOKIE_CSRF_PROTECT"] = True
+# If JWT_COOKIE_CSRF_PROTECT = True the next two settings are required to play nicely with Dash
+app.server.config["JWT_ACCESS_CSRF_COOKIE_NAME"] = "_csrf_token"
+app.server.config["JWT_ACCESS_CSRF_HEADER_NAME"] = "X-CSRFToken"
 app.server.config["JWT_SECRET_KEY"] = SECRET_KEY
+
+
+@jwt.invalid_token_loader
+def invalid_token_callback(callback):
+    # Invalid token in auth header
+    response = flask.Response(
+        response=json.dumps({"message": "Invalid token"}), status=401, mimetype="application/json"
+    )
+    unset_access_cookies(response)
+    return response
+
 
 # Login route
 @app.server.route("/custom-auth/login", methods=["POST"])
