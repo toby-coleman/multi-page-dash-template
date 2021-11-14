@@ -22,9 +22,10 @@ jwt = JWTManager(app.server)
 # Only send cookies over HTTPS: set to True for production
 app.server.config["JWT_COOKIE_SECURE"] = False
 app.server.config["JWT_TOKEN_LOCATION"] = ["cookies"]
-# Need a method to put CSRF token in header to enable this
-# See: https://flask-jwt-extended.readthedocs.io/en/stable/token_locations/
-app.server.config["JWT_COOKIE_CSRF_PROTECT"] = False
+app.server.config["JWT_COOKIE_CSRF_PROTECT"] = True
+# If JWT_COOKIE_CSRF_PROTECT = True the next two settings are required to play nicely with Dash
+app.server.config["JWT_ACCESS_CSRF_COOKIE_NAME"] = "_csrf_token"
+app.server.config["JWT_ACCESS_CSRF_HEADER_NAME"] = "X-CSRFToken"
 app.server.config["JWT_SECRET_KEY"] = SECRET_KEY
 
 
