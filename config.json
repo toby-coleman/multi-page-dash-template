@@ -1,10 +1,15 @@
 {
     "title": "Basic Dash Template",
-    "external_css": [
-        "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    ],
+    "theme": "Bootstrap",
+    "external_css": [],
     "pages": [
-        {"path": "/page1", "name": "Basic Demo", "package": "basic_page", "description": "A simple example page"}
+        {
+            "path": "/page1",
+            "name": "Basic Demo",
+            "package": "basic_page",
+            "description": "A simple example page"
+        }
     ],
+    "cards_per_row": 2,
     "authenticate": true
 }

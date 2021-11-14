@@ -1,6 +1,5 @@
 import dash_bootstrap_components as dbc
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc, html
 
 import utils
 
@@ -52,7 +51,7 @@ def layout(params):
                     ),
                 ],
                 width=6,
-                className="pd-2",
+                class_name="pd-2",
             ),
             dbc.Col(
                 [
@@ -72,8 +71,8 @@ def layout(params):
                     ),
                 ],
                 width=6,
-                className="pd-2",
+                class_name="pd-2",
             ),
         ],
-        className="mx-5 mt-5",
+        class_name="mx-5 mt-5",
     )

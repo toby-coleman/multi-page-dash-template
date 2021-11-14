@@ -3,9 +3,8 @@ from importlib import import_module
 from urllib import parse
 
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
 import flask
+from dash import dcc, html
 
 import authentication
 
@@ -62,4 +61,4 @@ def display_page(url_path, search):
 
 
 if __name__ == "__main__":
-    app.run_server(host="0.0.0.0", threaded=True, debug=True, port=8080)
+    app.run_server(host="0.0.0.0", threaded=True, debug=True, port=8081)
