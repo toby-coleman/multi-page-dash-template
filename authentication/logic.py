@@ -1,45 +1,63 @@
+import json
+import os
+import secrets
+
 import flask
-import dash
+from flask_jwt_extended import (
+    JWTManager,
+    create_access_token,
+    get_jwt_identity,
+    set_access_cookies,
+    unset_access_cookies,
+)
+
 from app import app
 
+# A dictionary of valid username: password combinations
+VALID_USERS = json.loads(os.environ.get("VALID_USERS", "{}"))
+# Secret key for signing JWT tokens
+SECRET_KEY = os.environ.get("SECRET_KEY", secrets.token_urlsafe(16))
 
-# For example code, see https://dash.plot.ly/dash-core-components/logout_button
+jwt = JWTManager(app.server)
+# Only send cookies over HTTPS: set to True for production
+app.server.config["JWT_COOKIE_SECURE"] = False
+app.server.config["JWT_TOKEN_LOCATION"] = ["cookies"]
+# Need a method to put CSRF token in header to enable this
+# See: https://flask-jwt-extended.readthedocs.io/en/stable/token_locations/
+app.server.config["JWT_COOKIE_CSRF_PROTECT"] = False
+app.server.config["JWT_SECRET_KEY"] = SECRET_KEY
 
 # Login route
-@app.server.route('/custom-auth/login', methods=['POST'])
+@app.server.route("/custom-auth/login", methods=["POST"])
 def route_login():
     data = flask.request.form
-    username = data.get('username')
-    password = data.get('password')
+    username = data.get("username")
+    password = data.get("password")
 
-    if not username or not password:
-        # Redirect to the homepage
-        rep = flask.redirect('/')
+    if username not in VALID_USERS or VALID_USERS[username] != password:
+        # Invalid username or password, redirect to the homepage
+        return flask.redirect("/")
 
-    # actual implementation should verify the password.
-    # Recommended to only keep a hash in database and use something like
-    # bcrypt to encrypt the password and check the hashed results.
+    # Set a cookie with a JWT access token
+    access_token = create_access_token(identity=username)
 
     # Return a redirect with
-    rep = flask.redirect(flask.request.referrer)
+    response = flask.redirect(flask.request.referrer)
+    # Set cookie lifetime to 1 day
+    set_access_cookies(response, access_token, max_age=1 * 24 * 3600)
 
-    # Here we just store the given username in a cookie.
-    # Actual session cookies should be signed or use a JWT token.
-    payload = username
-    rep.set_cookie('auth-session', payload, httponly=True)
-    return rep
+    return response
 
 
 # Logout route
-@app.server.route('/custom-auth/logout', methods=['POST'])
+@app.server.route("/custom-auth/logout", methods=["POST"])
 def route_logout():
     # Redirect back to the index and remove the session cookie.
-    rep = flask.redirect('/')
-    rep.set_cookie('auth-session', '', httponly=True, expires=0)
-    return rep
+    response = flask.redirect("/")
+    unset_access_cookies(response)
+    return response
 
 
-# Use this method to check that a cookie is for a valid, logged-in user
-def check_cookie(cookie):
-    # Need to implement proper checks here, e.g. of JWT token
-    return True if cookie else False
+def check_cookie():
+    # Return JWT identity
+    return get_jwt_identity()
