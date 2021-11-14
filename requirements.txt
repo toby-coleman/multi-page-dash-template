@@ -1,0 +1,7 @@
+black
+dash>=2.0
+dash_bootstrap_components>=1.0
+dash-auth
+flask-jwt-extended
+isort
+plotly
