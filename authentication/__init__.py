@@ -1,1 +1,1 @@
-from .logic import *
+from .logic import *  # noqa: F403

@@ -11,14 +11,12 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "black>=26.3.1",
-    "isort",
     "pytest",
+    "ruff",
 ]
 
-[tool.black]
+[tool.ruff]
 line-length = 119
 
-[tool.isort]
-profile = "black"
-multi_line_output = 3
+[tool.ruff.lint]
+select = ["E", "F", "I"]
