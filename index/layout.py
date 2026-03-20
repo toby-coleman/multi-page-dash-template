@@ -1,7 +1,7 @@
 import math
 
 import dash_bootstrap_components as dbc
-from dash import dcc, html
+from dash import html
 
 from app import config
 
@@ -62,9 +62,14 @@ def header(auth=None):
             [
                 # Add other menu items here...
                 # Logout button (only show if a user is logged in)
-                dcc.LogoutButton(
-                    logout_url="/custom-auth/logout",
-                    className="btn btn-outline-danger",
+                html.Form(
+                    html.Button(
+                        "Logout",
+                        type="submit",
+                        className="btn btn-outline-danger",
+                    ),
+                    action="/custom-auth/logout",
+                    method="post",
                     style={"display": "none"} if not auth else {},
                 ),
             ],
