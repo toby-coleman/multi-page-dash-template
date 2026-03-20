@@ -11,7 +11,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "black",
+    "black>=26.3.1",
     "isort",
     "pytest",
 ]
